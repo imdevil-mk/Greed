@@ -17,9 +17,21 @@ android {
     }
 
     buildTypes {
+        def localProperties = new Properties()
+        localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            buildConfigField("String", "apiKey", localProperties['apiKey'])
+            buildConfigField("String", "secretKey", localProperties['secretKey'])
+            buildConfigField("String", "passPhrase", localProperties['passPhrase'])
+        }
+        debug {
+            buildConfigField("String", "apiKey", localProperties['apiKey'])
+            buildConfigField("String", "secretKey", localProperties['secretKey'])
+            buildConfigField("String", "passPhrase", localProperties['passPhrase'])
         }
     }
     compileOptions {
@@ -40,4 +52,10 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    //for network
+    implementation "com.google.code.gson:gson:2.8.6"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
 }

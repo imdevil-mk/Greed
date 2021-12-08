@@ -13,6 +13,6 @@ interface AccountService {
     fun getBalance(
         @HeaderMap headers: Map<String, String>,
         @Query("ccy") ccy: String
-    ): Call<ResponseBody>
+    ): Call<AccountBalanceResponse>
 
 }

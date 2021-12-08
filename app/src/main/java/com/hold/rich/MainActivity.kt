@@ -3,9 +3,9 @@ package com.hold.rich
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.hold.rich.okex.AccountBalanceResponse
 import com.hold.rich.okex.AccountService
 import com.hold.rich.okex.HmacSHA256Base64Utils
-import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -50,21 +50,19 @@ class MainActivity : AppCompatActivity() {
 
         val request = retrofit.getBalance(headers, "USDT")
 
-        request.enqueue(object : retrofit2.Callback<ResponseBody> {
+        request.enqueue(object : retrofit2.Callback<AccountBalanceResponse> {
             override fun onResponse(
-                call: retrofit2.Call<ResponseBody>,
-                response: Response<ResponseBody>
+                call: retrofit2.Call<AccountBalanceResponse>,
+                response: Response<AccountBalanceResponse>
             ) {
-                Log.d(TAG, "onResponse: ${response.body()?.string()}")
+                Log.d(TAG, "onResponse: $response")
             }
 
-            override fun onFailure(call: retrofit2.Call<ResponseBody>, t: Throwable) {
+            override fun onFailure(call: retrofit2.Call<AccountBalanceResponse>, t: Throwable) {
                 Log.d(TAG, "onFailure: fuck")
             }
 
         })
-
-
     }
 
     /**

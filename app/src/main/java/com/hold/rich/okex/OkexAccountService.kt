@@ -8,8 +8,8 @@ interface AccountService {
 
     //查看账户余额 Get Balance
     @GET("/api/v5/account/balance")
-    fun getBalance(
+    suspend fun getBalance(
         @Query("ccy") ccy: String
-    ): Call<AccountBalanceResponse>
+    ): AccountBalanceResponse
 
 }

@@ -17,7 +17,7 @@ import javax.inject.Singleton
 class NetworkModule {
 
     private val logger = HttpLoggingInterceptor().apply {
-        level = HttpLoggingInterceptor.Level.BASIC
+        level = HttpLoggingInterceptor.Level.BODY
     }
 
     @Singleton

@@ -5,8 +5,9 @@ import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.hold.rich.okex.AccountBalanceResponse
-import com.hold.rich.okex.AccountService
+import com.hold.rich.api.bean.NetworkResponse
+import com.hold.rich.api.service.AccountService
+import com.hold.rich.api.service.AssetService
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,27 +21,41 @@ private const val TAG = "Greedy-MainActivity"
 class MainActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var okexRetrofit: Retrofit
+    lateinit var retrofit: Retrofit
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val retrofit = okexRetrofit.create(AccountService::class.java)
-
+        val account = retrofit.create(AccountService::class.java)
         lifecycleScope.launch(Dispatchers.IO) {
             val request = try {
-                retrofit.getBalance("USDT")
+                account.getBalance("USDT,LUNA")
             } catch (e: Exception) {
                 Exception("Network request failed")
             }
             withContext(Dispatchers.Main) {
                 when (request) {
-                    is AccountBalanceResponse -> findViewById<TextView>(R.id.msg).text =
-                        request.toString()
+                    is NetworkResponse<*> -> findViewById<TextView>(R.id.msg).text =
+                        request.data.toString()
                     is Exception -> findViewById<TextView>(R.id.msg).text = request.toString()
                     else -> Log.d(TAG, "onCreate: error type")
                 }
+            }
+        }
+
+        val asset = retrofit.create(AssetService::class.java)
+        lifecycleScope.launch(Dispatchers.IO) {
+            val response = try {
+                asset.getSupportCoinList()
+            } catch (e: Exception) {
+                Exception("Network request failed")
+            }
+
+            when(response) {
+                is NetworkResponse<*> -> Log.d(TAG, "onCreate: ${response.data}")
+                is Exception -> Log.d(TAG, "onCreate: $response")
+                else -> Log.d(TAG, "onCreate: error response type")
             }
         }
     }

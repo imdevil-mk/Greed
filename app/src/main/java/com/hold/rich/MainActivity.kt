@@ -5,6 +5,7 @@ import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.hold.rich.api.bean.BalanceSummary
 import com.hold.rich.api.bean.NetworkResponse
 import com.hold.rich.api.service.AccountService
 import com.hold.rich.api.service.AssetService
@@ -20,24 +21,22 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var retrofit: Retrofit
+    lateinit var msg: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        msg = findViewById(R.id.msg)
+
         val account = retrofit.create(AccountService::class.java)
         lifecycleScope.launch {
-            val request = try {
+            val response: ApiResponse<NetworkResponse<BalanceSummary>> =
                 account.getBalance("USDT,LUNA")
-            } catch (e: Exception) {
-                Exception("Network request failed")
-            }
-
-            when (request) {
-                is NetworkResponse<*> -> findViewById<TextView>(R.id.msg).text =
-                    request.data.toString()
-                is Exception -> findViewById<TextView>(R.id.msg).text = request.toString()
-                else -> Log.d(TAG, "onCreate: error type")
+            when (response) {
+                is ApiSuccessResponse -> msg.text = response.body.data[0].totalEq
+                is ApiErrorResponse -> msg.text = response.toString()
+                else -> msg.text = "onCreate: error type"
             }
         }
 

@@ -1,5 +1,6 @@
 package com.hold.rich.di
 
+import com.hold.rich.ApiResponseCallAdapterFactory
 import com.hold.rich.okex.OkexConfig
 import com.hold.rich.okex.OkexHeadersInterceptor
 import dagger.Module
@@ -35,5 +36,6 @@ class NetworkModule {
         .baseUrl(OkexConfig.BASE_URL)
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(ApiResponseCallAdapterFactory())
         .build()
 }

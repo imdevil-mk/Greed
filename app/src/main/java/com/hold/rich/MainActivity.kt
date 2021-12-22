@@ -31,10 +31,10 @@ class MainActivity : AppCompatActivity() {
 
         val account = retrofit.create(AccountService::class.java)
         lifecycleScope.launch {
-            val response: ApiResponse<NetworkResponse<BalanceSummary>> =
+            val response: ApiResponse<List<BalanceSummary>> =
                 account.getBalance("USDT,LUNA")
             when (response) {
-                is ApiSuccessResponse -> msg.text = response.body.data[0].totalEq
+                is ApiSuccessResponse -> msg.text = response.data[0].totalEq
                 is ApiErrorResponse -> msg.text = response.toString()
                 else -> msg.text = "onCreate: error type"
             }

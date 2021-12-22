@@ -7,7 +7,7 @@ import retrofit2.*
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 
-private const val TAG = "ApiResponseCallAdapterF"
+private const val TAG = "Greedy-ApiResponseCallAdapterF"
 
 class ApiResponseCallAdapterFactory : CallAdapter.Factory() {
     override fun get(
@@ -40,7 +40,6 @@ class ApiResponseCallAdapter<R>(private val responseType: Type) :
     override fun adapt(call: Call<R>): Call<ApiResponse<R>> {
         return ApiResponseCall(call)
     }
-
 }
 
 class ApiResponseCall<R>(
@@ -50,22 +49,48 @@ class ApiResponseCall<R>(
         return delegate.enqueue(object : Callback<R> {
             override fun onResponse(call: Call<R>, response: Response<R>) {
                 Log.d(TAG, "onResponse: ${response.body()}")
-
-                callback.onResponse(
-                    this@ApiResponseCall,
-                    Response.success(ApiResponse.create(response))
-                )
-
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    if (body is ApiSuccessResponse<*>) {
+                        if (body.code == 0) {
+                            callback.onResponse(
+                                this@ApiResponseCall,
+                                Response.success(
+                                    ApiSuccessResponse(
+                                        body.code,
+                                        body.errorMessage,
+                                        body.data as R
+                                    )
+                                )
+                            )
+                        } else {
+                            callback.onResponse(
+                                this@ApiResponseCall,
+                                Response.success(ApiBizErrorResponse(body.code, body.errorMessage))
+                            )
+                        }
+                    } else {
+                        callback.onResponse(
+                            this@ApiResponseCall,
+                            Response.success(ApiErrorResponse("Unkown error"))
+                        )
+                    }
+                } else {
+                    val t = HttpException(response)
+                    callback.onResponse(
+                        this@ApiResponseCall,
+                        Response.success(ApiErrorResponse(t.toString()))
+                    )
+                }
             }
 
             override fun onFailure(call: Call<R>, t: Throwable) {
                 Log.d(TAG, "onFailure: ")
                 callback.onResponse(
                     this@ApiResponseCall,
-                    Response.success(ApiResponse.create(t))
+                    Response.success(ApiErrorResponse(t.toString()))
                 )
             }
-
         })
     }
 

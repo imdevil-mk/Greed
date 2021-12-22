@@ -12,6 +12,5 @@ interface AccountService {
     @GET("/api/v5/account/balance")
     suspend fun getBalance(
         @Query("ccy") ccy: String
-    ): ApiResponse<NetworkResponse<BalanceSummary>>
-
+    ): ApiResponse<List<BalanceSummary>>
 }

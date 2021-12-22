@@ -6,7 +6,7 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import java.util.*
 
-private const val TAG = "OkexHeadersInterceptor"
+private const val TAG = "Greedy-OkexHeadersInterceptor"
 
 class OkexHeadersInterceptor : Interceptor {
 

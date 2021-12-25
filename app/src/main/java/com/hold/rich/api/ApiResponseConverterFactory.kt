@@ -1,4 +1,4 @@
-package com.hold.rich
+package com.hold.rich.api
 
 import android.util.Log
 import com.google.gson.Gson

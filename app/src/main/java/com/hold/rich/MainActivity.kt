@@ -5,6 +5,9 @@ import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.hold.rich.api.ApiErrorResponse
+import com.hold.rich.api.ApiResponse
+import com.hold.rich.api.ApiSuccessResponse
 import com.hold.rich.api.bean.BalanceSummary
 import com.hold.rich.api.bean.NetworkResponse
 import com.hold.rich.api.service.AccountService

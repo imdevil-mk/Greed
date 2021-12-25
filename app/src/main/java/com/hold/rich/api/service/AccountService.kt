@@ -1,8 +1,7 @@
 package com.hold.rich.api.service
 
-import com.hold.rich.ApiResponse
+import com.hold.rich.api.ApiResponse
 import com.hold.rich.api.bean.BalanceSummary
-import com.hold.rich.api.bean.NetworkResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

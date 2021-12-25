@@ -1,4 +1,4 @@
-package com.hold.rich
+package com.hold.rich.api
 
 sealed class ApiResponse<T>
 

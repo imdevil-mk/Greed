@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.hold.rich.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Retrofit
@@ -29,8 +30,12 @@ class MainActivity : AppCompatActivity() {
             binding.msg.text = it
         }
 
+        val adapter = SupportCoinAdapter()
+        binding.list.layoutManager = LinearLayoutManager(this)
+        binding.list.adapter = adapter
+
         mainViewModel.coinList.observe(this) {
-            binding.supportCoin.text = it.size.toString()
+            adapter.submitList(it)
         }
     }
 }

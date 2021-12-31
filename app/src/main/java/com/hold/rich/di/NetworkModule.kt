@@ -3,6 +3,7 @@ package com.hold.rich.di
 import com.hold.rich.api.ApiResponseCallAdapterFactory
 import com.hold.rich.api.ApiResponseConverterFactory
 import com.hold.rich.api.service.AccountService
+import com.hold.rich.api.service.AssetService
 import com.hold.rich.okex.OkexConfig
 import com.hold.rich.okex.OkexHeadersInterceptor
 import dagger.Module
@@ -47,4 +48,9 @@ class NetworkModule {
     @Provides
     fun provideAccountService(retrofit: Retrofit): AccountService =
         retrofit.create(AccountService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideAssetService(retrofit: Retrofit): AssetService =
+        retrofit.create(AssetService::class.java)
 }

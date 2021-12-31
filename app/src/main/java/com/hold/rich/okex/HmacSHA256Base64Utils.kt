@@ -61,13 +61,13 @@ object HmacSHA256Base64Utils {
      * @return prehash string eg: 2018-03-08T10:59:25.789ZPOST/orders?before=2&limit=30{"product_id":"BTC-USD-0309",
      * "order_id":"377454671037440"}
      */
-    fun preHash(
+    private fun preHash(
         timestamp: String, method: String, requestPath: String,
         queryString: String?, body: String?
     ): String {
         val preHash = StringBuilder()
         preHash.append(timestamp)
-        preHash.append(method.toUpperCase())
+        preHash.append(method.uppercase(Locale.getDefault()))
         preHash.append(requestPath)
         //get方法
         if (!queryString.isNullOrEmpty()) {

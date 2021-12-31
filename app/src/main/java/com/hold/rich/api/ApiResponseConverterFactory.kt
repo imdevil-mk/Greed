@@ -20,7 +20,10 @@ object ApiResponseConverterFactory : Converter.Factory() {
         type: Type,
         annotations: Array<out Annotation>,
         retrofit: Retrofit
-    ): Converter<ResponseBody, *> {
+    ): Converter<ResponseBody, *>? {
+        if (getRawType(type) != List::class.java) {
+            return null
+        }
         val adapter: TypeAdapter<Any> = gson.getAdapter(TypeToken.get(type)) as TypeAdapter<Any>
         return ApiResponseConverter(gson, adapter)
     }

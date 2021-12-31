@@ -2,6 +2,7 @@ package com.hold.rich.di
 
 import com.hold.rich.api.ApiResponseCallAdapterFactory
 import com.hold.rich.api.ApiResponseConverterFactory
+import com.hold.rich.api.service.AccountService
 import com.hold.rich.okex.OkexConfig
 import com.hold.rich.okex.OkexHeadersInterceptor
 import dagger.Module
@@ -11,6 +12,7 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -36,6 +38,13 @@ class NetworkModule {
         .baseUrl(OkexConfig.BASE_URL)
         .client(okHttpClient)
         .addConverterFactory(ApiResponseConverterFactory)
+        .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(ApiResponseCallAdapterFactory())
         .build()
+
+
+    @Singleton
+    @Provides
+    fun provideAccountService(retrofit: Retrofit): AccountService =
+        retrofit.create(AccountService::class.java)
 }

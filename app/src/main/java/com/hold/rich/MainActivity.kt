@@ -3,14 +3,10 @@ package com.hold.rich
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.hold.rich.api.ApiErrorResponse
-import com.hold.rich.api.ApiResponse
-import com.hold.rich.api.ApiSuccessResponse
-import com.hold.rich.api.bean.BalanceSummary
 import com.hold.rich.api.bean.NetworkResponse
-import com.hold.rich.api.service.AccountService
 import com.hold.rich.api.service.AssetService
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -25,22 +21,17 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var retrofit: Retrofit
     lateinit var msg: TextView
+    private val mainViewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d(TAG, "onCreate: ")
         setContentView(R.layout.activity_main)
 
         msg = findViewById(R.id.msg)
 
-        val account = retrofit.create(AccountService::class.java)
-        lifecycleScope.launch {
-            val response: ApiResponse<List<BalanceSummary>> =
-                account.getBalance("USDT,LUNA")
-            when (response) {
-                is ApiSuccessResponse -> msg.text = response.data[0].totalEq
-                is ApiErrorResponse -> msg.text = response.toString()
-                else -> msg.text = "onCreate: error type"
-            }
+        mainViewModel.balanceSummary.observe(this) {
+            msg.text = it
         }
 
         val asset = retrofit.create(AssetService::class.java)

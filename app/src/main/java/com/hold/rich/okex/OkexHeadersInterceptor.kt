@@ -19,7 +19,7 @@ class OkexHeadersInterceptor : Interceptor {
 
         val timestamp = getUnixTime()
         val method = origin.method
-        val requestPath = origin.url.toString().replace(OkexConfig.BASE_URL, "")
+        val requestPath = origin.url.toString().replace(BASE_URL, "")
         val sign = HmacSHA256Base64Utils.sign(timestamp, method, requestPath, null, null, secretKey)
 
         Log.d(TAG, "intercept: $method")

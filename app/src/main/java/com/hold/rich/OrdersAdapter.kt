@@ -1,18 +1,18 @@
 package com.hold.rich
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.hold.rich.api.bean.SupportCoin
+import com.hold.rich.api.bean.Order
 import com.hold.rich.databinding.SupportCoinListItemBinding
+import com.hold.rich.utils.unixTimeToString
 
 private const val TAG = "SupportCoinAdapter"
 
-class SupportCoinAdapter :
-    ListAdapter<SupportCoin, SupportCoinAdapter.ItemHolder>(CoinDiffCallback()) {
+class OrdersAdapter :
+    ListAdapter<Order, OrdersAdapter.ItemHolder>(CoinDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return ItemHolder(
@@ -25,7 +25,6 @@ class SupportCoinAdapter :
     }
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
-        Log.d(TAG, "onBindViewHolder: $position")
         holder.bind(getItem(position))
     }
 
@@ -33,18 +32,26 @@ class SupportCoinAdapter :
         private val binding: SupportCoinListItemBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(coin: SupportCoin) {
-            Log.d(TAG, "bind: ${coin.name}")
-            binding.name.text = coin.ccy + " " + coin.chain
+        fun bind(order: Order) {
+            binding.apply {
+                instId.text = order.instId
+                state.text = order.state
+                side.text = order.side
+                fillTime.text = unixTimeToString(order.fillTime)
+                sz.text = order.sz
+                px.text = order.px
+                fillSz.text = order.fillSz
+                avgPx.text = order.avgPx
+            }
         }
     }
 
-    class CoinDiffCallback : DiffUtil.ItemCallback<SupportCoin>() {
-        override fun areItemsTheSame(oldItem: SupportCoin, newItem: SupportCoin): Boolean {
-            return oldItem.ccy == newItem.ccy
+    class CoinDiffCallback : DiffUtil.ItemCallback<Order>() {
+        override fun areItemsTheSame(oldItem: Order, newItem: Order): Boolean {
+            return oldItem.ordId == newItem.ordId
         }
 
-        override fun areContentsTheSame(oldItem: SupportCoin, newItem: SupportCoin): Boolean {
+        override fun areContentsTheSame(oldItem: Order, newItem: Order): Boolean {
             return oldItem == newItem
         }
     }

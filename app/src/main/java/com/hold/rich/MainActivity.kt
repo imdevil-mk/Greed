@@ -26,16 +26,16 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        mainViewModel.balanceSummary.observe(this) {
-            binding.msg.text = it
+        mainViewModel.balanceSummary.observe(this) { balance ->
+            binding.msg.text = balance?.totalEq ?: "-1"
         }
 
-        val adapter = SupportCoinAdapter()
+        val adapter = OrdersAdapter()
         binding.list.layoutManager = LinearLayoutManager(this)
         binding.list.adapter = adapter
 
-        mainViewModel.coinList.observe(this) {
-            adapter.submitList(it)
+        mainViewModel.orders.observe(this) { orders ->
+            adapter.submitList(orders)
         }
     }
 }

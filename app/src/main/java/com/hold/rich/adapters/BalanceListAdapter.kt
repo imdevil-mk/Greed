@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.hold.rich.api.bean.CoinBalanceSummary
 import com.hold.rich.databinding.BalanceListItemBinding
+import com.hold.rich.utils.readable
 
 class BalanceListAdapter :
     ListAdapter<CoinBalanceSummary, BalanceListAdapter.ItemHolder>(CoinBalanceDiffCallback()) {
@@ -31,14 +32,14 @@ class BalanceListAdapter :
         fun bind(balance: CoinBalanceSummary) {
             binding.apply {
                 binding.ccy.text = balance.ccy
-                binding.eqUsd.text = "$" + balance.eqUsd
+                binding.eqUsd.text = "$" + balance.eqUsd.readable()
 
-                binding.eq.text = balance.eq
-                binding.frozenBal.text = balance.frozenBal
-                binding.availEq.text = balance.availEq
-                binding.upl.text = balance.upl
-                binding.mgnRatio.text = balance.mgnRatio
-                binding.notionalLever.text = balance.notionalLever
+                binding.eq.text = balance.eq.readable()
+                binding.frozenBal.text = balance.frozenBal.readable()
+                binding.availEq.text = balance.availEq.readable()
+                binding.upl.text = balance.upl.readable()
+                binding.mgnRatio.text = balance.mgnRatio.readable()
+                binding.notionalLever.text = balance.notionalLever.readable()
             }
         }
     }

@@ -35,13 +35,22 @@ class BalanceFragment : Fragment() {
         val flowStepNumber = safeArgs.flowStepNumber
         binding.totalBalance.text = flowStepNumber.toString()
 
+        binding.swipeRefresh.setOnRefreshListener {
+            balanceViewModel.refreshBalance()
+        }
+
         val adapter = BalanceListAdapter()
         binding.list.layoutManager = LinearLayoutManager(requireContext())
         binding.list.adapter = adapter
+        binding.list.itemAnimator?.changeDuration = 0
 
         balanceViewModel.balanceSummary.observe(viewLifecycleOwner) {
             binding.totalBalance.text = it?.totalEq ?: "error"
             adapter.submitList(it?.details ?: emptyList())
+            binding.swipeRefresh.isRefreshing = false
         }
+
+        balanceViewModel.refreshBalance()
+        binding.swipeRefresh.isRefreshing = true
     }
 }

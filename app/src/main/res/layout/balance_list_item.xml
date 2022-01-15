@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="3dp"
+    app:cardCornerRadius="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="3dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/coin_icon"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:src="@drawable/ic_savings_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/ccy"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            app:layout_constraintStart_toEndOf="@id/coin_icon"
+            app:layout_constraintTop_toTopOf="@id/coin_icon"
+            app:layout_constraintBottom_toBottomOf="@id/coin_icon"
+            tools:text="@string/app_name" />
+
+        <TextView
+            android:id="@+id/eqUsd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            app:layout_constraintStart_toEndOf="@id/ccy"
+            app:layout_constraintTop_toTopOf="@id/ccy"
+            app:layout_constraintBottom_toBottomOf="@id/ccy"
+            tools:text="@string/app_name" />
+
+
+        <TextView
+            android:id="@+id/eqTips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ccy"
+            android:layout_marginTop="9dp"
+            android:text="@string/eqTips" />
+
+        <TextView
+            android:id="@+id/eq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            app:layout_constraintStart_toStartOf="@id/eqTips"
+            app:layout_constraintTop_toBottomOf="@id/eqTips"
+            tools:text="@string/app_name" />
+
+
+        <TextView
+            android:id="@+id/frozenBalTips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/frozenBalTips"
+            app:layout_constraintBottom_toBottomOf="@id/eqTips"
+            app:layout_constraintEnd_toStartOf="@id/availEqTips"
+            app:layout_constraintStart_toEndOf="@id/eqTips"
+            app:layout_constraintTop_toTopOf="@id/eqTips" />
+
+        <TextView
+            android:id="@+id/frozenBal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            app:layout_constraintStart_toStartOf="@id/frozenBalTips"
+            app:layout_constraintTop_toBottomOf="@id/frozenBalTips"
+            tools:text="@string/app_name" />
+
+
+        <TextView
+            android:id="@+id/availEqTips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/availEqTips"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/frozenBalTips"
+            app:layout_constraintBottom_toBottomOf="@id/frozenBalTips" />
+
+        <TextView
+            android:id="@+id/availEq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            app:layout_constraintEnd_toEndOf="@id/availEqTips"
+            app:layout_constraintTop_toBottomOf="@id/availEqTips"
+            tools:text="@string/app_name" />
+
+
+        <TextView
+            android:id="@+id/uplTips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/eq"
+            android:layout_marginTop="5dp"
+            android:text="@string/uplTips" />
+
+        <TextView
+            android:id="@+id/upl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            app:layout_constraintStart_toStartOf="@id/uplTips"
+            app:layout_constraintTop_toBottomOf="@id/uplTips"
+            tools:text="@string/app_name" />
+
+
+        <TextView
+            android:id="@+id/mgnRatioTips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mgnRatioTips"
+            app:layout_constraintBottom_toBottomOf="@id/uplTips"
+            app:layout_constraintStart_toStartOf="@+id/frozenBalTips"
+            app:layout_constraintTop_toTopOf="@id/uplTips" />
+
+        <TextView
+            android:id="@+id/mgnRatio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            app:layout_constraintStart_toStartOf="@id/mgnRatioTips"
+            app:layout_constraintTop_toBottomOf="@id/mgnRatioTips"
+            tools:text="@string/app_name" />
+
+
+        <TextView
+            android:id="@+id/notionalLeverTips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/notionalLeverTips"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/mgnRatioTips"
+            app:layout_constraintBottom_toBottomOf="@id/mgnRatioTips" />
+
+        <TextView
+            android:id="@+id/notionalLever"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            app:layout_constraintEnd_toEndOf="@id/notionalLeverTips"
+            app:layout_constraintTop_toBottomOf="@id/notionalLeverTips"
+            tools:text="@string/app_name" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

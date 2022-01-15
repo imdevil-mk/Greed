@@ -23,7 +23,7 @@ data class BalanceSummary(
     // 账户信息的更新时间，Unix时间戳的毫秒数格式，如 1597026383085
     val uTime: String,
     // 各币种资产详细信息l
-    val coinBalanceSummaries: List<CoinBalanceSummary>,
+    val details: List<CoinBalanceSummary>,
 )
 
 /*/

@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Greed</string>
+    <string name="eqTips">币种权益</string>
+    <string name="frozenBalTips">占用</string>
+    <string name="availEqTips">可用</string>
+    <string name="uplTips">未实现盈亏</string>
+    <string name="mgnRatioTips">保证金率</string>
+    <string name="notionalLeverTips">当前实际杠杆</string>
 </resources>

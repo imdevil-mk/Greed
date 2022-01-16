@@ -5,7 +5,7 @@
         android:icon="@drawable/ic_home"
         android:title="@string/app_name" />
     <item
-        android:id="@id/balance2_dest"
+        android:id="@id/orders_dest"
         android:icon="@drawable/ic_home"
         android:title="@string/app_name" />
 </menu>

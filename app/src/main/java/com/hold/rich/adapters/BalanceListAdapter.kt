@@ -2,12 +2,16 @@ package com.hold.rich.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.hold.rich.api.bean.CoinBalanceSummary
 import com.hold.rich.databinding.BalanceListItemBinding
+import com.hold.rich.ui.BalanceFragmentDirections
 import com.hold.rich.utils.readable
+
+private const val TAG = "BalanceListAdapter"
 
 class BalanceListAdapter :
     ListAdapter<CoinBalanceSummary, BalanceListAdapter.ItemHolder>(CoinBalanceDiffCallback()) {
@@ -40,6 +44,12 @@ class BalanceListAdapter :
                 binding.upl.text = balance.upl.readable()
                 binding.mgnRatio.text = balance.mgnRatio.readable()
                 binding.notionalLever.text = balance.notionalLever.readable()
+            }
+
+            binding.fuck.setOnClickListener {
+                val action =
+                    BalanceFragmentDirections.actionBalanceFragmentToOrdersFragment(balance.ccy)
+                binding.root.findNavController().navigate(action)
             }
         }
     }

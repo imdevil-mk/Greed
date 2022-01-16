@@ -15,17 +15,20 @@
             android:name="flowStepNumber"
             app:argType="integer"
             android:defaultValue="1" />
+
+        <action
+            android:id="@+id/action_balance_fragment_to_orders_fragment"
+            app:destination="@id/orders_dest" />
     </fragment>
 
     <fragment
-        android:id="@+id/balance2_dest"
-        android:name="com.hold.rich.ui.BalanceFragment"
-        android:label="fragment_balance"
-        tools:layout="@layout/fragment_balance">
-
+        android:id="@+id/orders_dest"
+        android:name="com.hold.rich.ui.OrdersFragment"
+        android:label="orders_fragment"
+        tools:layout="@layout/orders_fragment">
         <argument
-            android:name="flowStepNumber"
-            app:argType="integer"
-            android:defaultValue="2" />
+            android:name="ccy"
+            app:argType="string"
+            android:defaultValue="LUNA" />
     </fragment>
 </navigation>

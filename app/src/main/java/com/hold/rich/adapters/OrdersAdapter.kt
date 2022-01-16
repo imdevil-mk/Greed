@@ -1,4 +1,4 @@
-package com.hold.rich
+package com.hold.rich.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,17 +6,17 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.hold.rich.api.bean.Order
-import com.hold.rich.databinding.SupportCoinListItemBinding
+import com.hold.rich.databinding.OrderListItemBinding
 import com.hold.rich.utils.unixTimeToString
 
 private const val TAG = "SupportCoinAdapter"
 
 class OrdersAdapter :
-    ListAdapter<Order, OrdersAdapter.ItemHolder>(CoinDiffCallback()) {
+    ListAdapter<Order, OrdersAdapter.ItemHolder>(OrderDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return ItemHolder(
-            SupportCoinListItemBinding.inflate(
+            OrderListItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -29,12 +29,12 @@ class OrdersAdapter :
     }
 
     class ItemHolder(
-        private val binding: SupportCoinListItemBinding,
+        private val binding: OrderListItemBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(order: Order) {
             binding.apply {
-                instId.text = order.instId
+                instId.text = order.instId + " ${order.instType}"
                 state.text = order.state
                 side.text = order.side
                 fillTime.text = unixTimeToString(order.fillTime)
@@ -46,7 +46,7 @@ class OrdersAdapter :
         }
     }
 
-    class CoinDiffCallback : DiffUtil.ItemCallback<Order>() {
+    class OrderDiffCallback : DiffUtil.ItemCallback<Order>() {
         override fun areItemsTheSame(oldItem: Order, newItem: Order): Boolean {
             return oldItem.ordId == newItem.ordId
         }

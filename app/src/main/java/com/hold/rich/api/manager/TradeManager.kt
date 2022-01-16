@@ -8,10 +8,15 @@ import javax.inject.Inject
 class TradeManager @Inject constructor(
     private val service: TradeService,
 ) {
+    /** 根据产品类型查询订单 */
     suspend fun getHistoryOrders(
         instType: String,
+        instId: String = "",
     ): List<Order> {
-        val map = mapOf("instType" to instType)
+        val map = mapOf(
+            "instType" to instType,
+            "instId" to instId,
+        )
         return when (val response = service.getHistoryOrders(map)) {
             is ApiSuccessResponse -> response.data
             else -> emptyList()

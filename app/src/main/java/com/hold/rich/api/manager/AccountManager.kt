@@ -3,6 +3,7 @@ package com.hold.rich.api.manager
 import com.hold.rich.api.ApiSuccessResponse
 import com.hold.rich.api.bean.BalanceSummary
 import com.hold.rich.api.service.AccountService
+import com.hold.rich.utils.joinParams
 import javax.inject.Inject
 
 private const val TAG = "AccountManager"
@@ -12,12 +13,7 @@ class AccountManager @Inject constructor(
 ) {
 
     suspend fun getBalance(vararg tokens: String): BalanceSummary? {
-        var ccys = ""
-        for (token in tokens) {
-            ccys += "$token,"
-        }
-        if (ccys.length > 1) ccys = ccys.dropLast(1)
-        return when (val response = service.getBalance(ccys)) {
+        return when (val response = service.getBalance(joinParams(*tokens))) {
             is ApiSuccessResponse -> response.data[0]
             else -> null
         }

@@ -7,6 +7,7 @@ import retrofit2.http.QueryMap
 
 interface TradeService {
 
+    /** 获取最近3个月的已经完结状态的订单数据 */
     @GET("/api/v5/trade/orders-history-archive")
     suspend fun getHistoryOrders(
         @QueryMap map: Map<String, String>

@@ -26,3 +26,24 @@ fun String.readable(): String {
         ""
     }
 }
+
+fun joinParams(vararg params: String): String {
+    var result = ""
+    for (param in params) {
+        result += "$param,"
+    }
+    if (result.length > 1) result = result.dropLast(1)
+    return result
+}
+
+fun String.toSpotInst(): String {
+    return "$this-USDT"
+}
+
+fun String.toMarginInst(): String {
+    return "$this-USDT"
+}
+
+fun String.toSwapInst(): String {
+    return "$this-USDT-SWAP"
+}

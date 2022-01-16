@@ -46,7 +46,7 @@ class BalanceListAdapter :
                 binding.notionalLever.text = balance.notionalLever.readable()
             }
 
-            binding.fuck.setOnClickListener {
+            binding.root.setOnClickListener {
                 val action =
                     BalanceFragmentDirections.actionBalanceFragmentToOrdersFragment(balance.ccy)
                 binding.root.findNavController().navigate(action)

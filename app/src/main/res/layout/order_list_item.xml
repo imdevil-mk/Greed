@@ -10,7 +10,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="3dp">
 
         <TextView
             android:id="@+id/instId"
@@ -18,15 +19,26 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/app_name" />
+            tools:text="@string/instIdTips" />
+
+        <TextView
+            android:id="@+id/instType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/instId"
+            app:layout_constraintTop_toTopOf="@id/instId"
+            app:layout_constraintBottom_toBottomOf="@id/instId"
+            android:layout_marginStart="5dp"
+            tools:text="@string/instTypeTips" />
 
         <TextView
             android:id="@+id/state"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/app_name" />
+            app:layout_constraintTop_toTopOf="@id/instId"
+            app:layout_constraintBottom_toBottomOf="@id/instId"
+            tools:text="@string/stateTips" />
 
         <TextView
             android:id="@+id/side"
@@ -34,52 +46,114 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="@id/instId"
             app:layout_constraintTop_toBottomOf="@id/instId"
-            tools:text="@string/app_name" />
+            tools:text="@string/sideTips" />
+
+        <TextView
+            android:id="@+id/posSide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/side"
+            app:layout_constraintTop_toTopOf="@id/side"
+            app:layout_constraintBottom_toBottomOf="@id/side"
+            android:layout_marginStart="15dp"
+            tools:text="@string/posSideTips" />
+
+        <TextView
+            android:id="@+id/lever"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            app:layout_constraintBottom_toBottomOf="@id/side"
+            app:layout_constraintStart_toEndOf="@id/posSide"
+            app:layout_constraintTop_toTopOf="@id/side"
+            tools:text="@string/leverTips" />
+
+        <TextView
+            android:id="@+id/tdMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            app:layout_constraintBottom_toBottomOf="@id/side"
+            app:layout_constraintStart_toEndOf="@id/lever"
+            app:layout_constraintTop_toTopOf="@id/side"
+            tools:text="@string/tdModeTips" />
 
         <TextView
             android:id="@+id/fillTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="15dp"
             app:layout_constraintBottom_toBottomOf="@id/side"
-            app:layout_constraintStart_toEndOf="@id/side"
+            app:layout_constraintStart_toEndOf="@id/tdMode"
             app:layout_constraintTop_toTopOf="@id/side"
-            tools:text="@string/app_name" />
+            tools:text="@string/fillTimeTips" />
 
         <TextView
-            android:id="@+id/sz"
+            android:id="@+id/szTips"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             app:layout_constraintStart_toStartOf="@id/side"
             app:layout_constraintTop_toBottomOf="@id/side"
+            android:text="@string/szTips" />
+
+        <TextView
+            android:id="@+id/sz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/szTips"
+            app:layout_constraintTop_toBottomOf="@id/szTips"
             tools:text="@string/app_name" />
+
+        <TextView
+            android:id="@+id/pxTips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/szTips"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/szTips"
+            android:text="@string/pxTips" />
 
         <TextView
             android:id="@+id/px"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@id/sz"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/sz"
+            app:layout_constraintTop_toBottomOf="@id/pxTips"
             tools:text="@string/app_name" />
 
         <TextView
-            android:id="@+id/fillSz"
+            android:id="@+id/accFillSzTips"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             app:layout_constraintStart_toStartOf="@id/sz"
             app:layout_constraintTop_toBottomOf="@id/sz"
+            android:text="@string/accFillSzTips" />
+
+        <TextView
+            android:id="@+id/accFillSz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/accFillSzTips"
+            app:layout_constraintTop_toBottomOf="@id/accFillSzTips"
             tools:text="@string/app_name" />
+
+        <TextView
+            android:id="@+id/avgPxTips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/accFillSzTips"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/accFillSzTips"
+            android:text="@string/avgPxTips" />
 
         <TextView
             android:id="@+id/avgPx"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@id/fillSz"
+            app:layout_constraintTop_toBottomOf="@id/avgPxTips"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/fillSz"
             tools:text="@string/app_name" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -34,13 +34,19 @@ class OrdersAdapter :
 
         fun bind(order: Order) {
             binding.apply {
-                instId.text = order.instId + " ${order.instType}"
+                instId.text = order.instId
+                instType.text = order.instType
                 state.text = order.state
+
                 side.text = order.side
+                posSide.text = order.posSide
+                lever.text = order.lever
+                tdMode.text = order.tdMode
                 fillTime.text = unixTimeToString(order.fillTime)
+
                 sz.text = order.sz
                 px.text = order.px
-                fillSz.text = order.fillSz
+                accFillSz.text = order.accFillSz
                 avgPx.text = order.avgPx
             }
         }

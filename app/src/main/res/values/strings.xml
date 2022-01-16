@@ -6,4 +6,17 @@
     <string name="uplTips">未实现盈亏</string>
     <string name="mgnRatioTips">保证金率</string>
     <string name="notionalLeverTips">当前实际杠杆</string>
+    <string name="sideTips">订单方向</string>
+    <string name="posSideTips">持仓方向</string>
+    <string name="fillTimeTips">最新成交时间</string>
+    <string name="leverTips">杠杠</string>
+    <string name="instIdTips">产品ID</string>
+    <string name="instTypeTips">产品类型</string>
+    <string name="stateTips">订单状态</string>
+    <string name="szTips">委托数量</string>
+    <string name="pxTips">委托价格</string>
+    <string name="fillSzTips">最新成交数量</string>
+    <string name="accFillSzTips">累计成交数量</string>
+    <string name="avgPxTips">成交均价</string>
+    <string name="tdModeTips">交易模式</string>
 </resources>

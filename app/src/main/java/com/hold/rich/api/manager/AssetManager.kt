@@ -11,7 +11,7 @@ class AssetManager @Inject constructor(
 ) {
 
     suspend fun getSupportCoinList(): List<SupportCoin> {
-        return when (val response: ApiResponse<List<SupportCoin>> = service.getSupportCoinList()) {
+        return when (val response: ApiResponse<SupportCoin> = service.getSupportCoinList()) {
             is ApiSuccessResponse -> response.data
             else -> emptyList()
         }

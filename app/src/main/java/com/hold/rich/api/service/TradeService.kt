@@ -11,5 +11,5 @@ interface TradeService {
     @GET("/api/v5/trade/orders-history-archive")
     suspend fun getHistoryOrders(
         @QueryMap map: Map<String, String>
-    ): ApiResponse<List<Order>>
+    ): ApiResponse<Order>
 }

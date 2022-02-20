@@ -1,6 +1,7 @@
 package com.hold.rich.api
 
-import android.util.Log
+import com.hold.rich.api.bean.NetworkResponse
+import com.hold.rich.utils.TypeUtils
 import okhttp3.Request
 import okio.Timeout
 import retrofit2.*
@@ -27,52 +28,56 @@ class ApiResponseCallAdapterFactory : CallAdapter.Factory() {
             throw IllegalArgumentException("resource must be parameterized")
         }
 
-        val bodyType = getParameterUpperBound(0, innerType)
+        val dataType = getParameterUpperBound(0, innerType)
 
-        return ApiResponseCallAdapter<Any>(bodyType)
+        val responseType =
+            TypeUtils.ParameterizedTypeImpl(null, NetworkResponse::class.java, dataType)
+        return ApiResponseCallAdapter(responseType)
     }
 }
 
-class ApiResponseCallAdapter<R>(private val responseType: Type) :
-    CallAdapter<R, Call<ApiResponse<R>>> {
+class ApiResponseCallAdapter(private val responseType: Type) :
+    CallAdapter<NetworkResponse<Any>, Call<ApiResponse<Any>>> {
     override fun responseType(): Type = responseType
-
-    override fun adapt(call: Call<R>): Call<ApiResponse<R>> {
+    override fun adapt(call: Call<NetworkResponse<Any>>): Call<ApiResponse<Any>> {
         return ApiResponseCall(call)
     }
 }
 
-class ApiResponseCall<R>(
-    private val delegate: Call<R>,
-) : Call<ApiResponse<R>> {
-    override fun enqueue(callback: Callback<ApiResponse<R>>) {
-        return delegate.enqueue(object : Callback<R> {
-            override fun onResponse(call: Call<R>, response: Response<R>) {
-                Log.d(TAG, "onResponse: ${response.body()}")
+class ApiResponseCall(
+    private val delegate: Call<NetworkResponse<Any>>,
+) : Call<ApiResponse<Any>> {
+
+    override fun enqueue(callback: Callback<ApiResponse<Any>>) {
+        return delegate.enqueue(object : Callback<NetworkResponse<Any>> {
+            override fun onResponse(
+                call: Call<NetworkResponse<Any>>,
+                response: Response<NetworkResponse<Any>>
+            ) {
                 if (response.isSuccessful) {
                     val body = response.body()
-                    if (body is ApiSuccessResponse<*>) {
+                    if (body is NetworkResponse<Any>) {
                         if (body.code == 0) {
                             callback.onResponse(
                                 this@ApiResponseCall,
                                 Response.success(
                                     ApiSuccessResponse(
                                         body.code,
-                                        body.errorMessage,
-                                        body.data as R
+                                        body.msg,
+                                        body.data
                                     )
                                 )
                             )
                         } else {
                             callback.onResponse(
                                 this@ApiResponseCall,
-                                Response.success(ApiBizErrorResponse(body.code, body.errorMessage))
+                                Response.success(ApiBizErrorResponse(body.code, body.msg))
                             )
                         }
                     } else {
                         callback.onResponse(
                             this@ApiResponseCall,
-                            Response.success(ApiErrorResponse("Unkown error"))
+                            Response.success(ApiErrorResponse("Unknown error"))
                         )
                     }
                 } else {
@@ -84,8 +89,7 @@ class ApiResponseCall<R>(
                 }
             }
 
-            override fun onFailure(call: Call<R>, t: Throwable) {
-                Log.d(TAG, "onFailure: ")
+            override fun onFailure(call: Call<NetworkResponse<Any>>, t: Throwable) {
                 callback.onResponse(
                     this@ApiResponseCall,
                     Response.success(ApiErrorResponse(t.toString()))
@@ -102,7 +106,7 @@ class ApiResponseCall<R>(
 
     override fun cancel() = delegate.cancel()
 
-    override fun execute(): Response<ApiResponse<R>> {
+    override fun execute(): Response<ApiResponse<Any>> {
         throw UnsupportedOperationException("NetworkResponseCall doesn't support execute")
     }
 

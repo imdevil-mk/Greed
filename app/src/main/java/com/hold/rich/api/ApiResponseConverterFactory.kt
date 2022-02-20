@@ -1,9 +1,10 @@
 package com.hold.rich.api
 
-import android.util.Log
 import com.google.gson.Gson
-import com.google.gson.TypeAdapter
+import com.google.gson.JsonIOException
 import com.google.gson.reflect.TypeToken
+import com.google.gson.stream.JsonToken
+import com.hold.rich.api.bean.NetworkResponse
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Converter
@@ -21,11 +22,10 @@ object ApiResponseConverterFactory : Converter.Factory() {
         annotations: Array<out Annotation>,
         retrofit: Retrofit
     ): Converter<ResponseBody, *>? {
-        if (getRawType(type) != List::class.java) {
+        if (getRawType(type) != NetworkResponse::class.java) {
             return null
         }
-        val adapter: TypeAdapter<Any> = gson.getAdapter(TypeToken.get(type)) as TypeAdapter<Any>
-        return ApiResponseConverter(gson, adapter)
+        return ApiResponseConverter(gson, type)
     }
 
     override fun requestBodyConverter(
@@ -38,25 +38,20 @@ object ApiResponseConverterFactory : Converter.Factory() {
     }
 }
 
-class ApiResponseConverter<T>(
+class ApiResponseConverter(
     private val gson: Gson,
-    private val adapter: TypeAdapter<T>,
-) : Converter<ResponseBody, T> {
-    override fun convert(value: ResponseBody): T? {
-        Log.d(TAG, "convert: ")
+    private val type: Type,
+) : Converter<ResponseBody, Any> {
+    override fun convert(value: ResponseBody): Any {
+        val adapter = gson.getAdapter(TypeToken.get(type))
         val jsonReader = gson.newJsonReader(value.charStream())
-        jsonReader.beginObject()
-        var code = -1
-        var msg = ""
-        var data: T? = null
-        while (jsonReader.hasNext()) {
-            when (jsonReader.nextName()) {
-                "code" -> code = jsonReader.nextInt()
-                "msg" -> msg = jsonReader.nextString()
-                "data" -> data = adapter.read(jsonReader)
+
+        return value.use {
+            val result: Any = adapter.read(jsonReader)
+            if (jsonReader.peek() != JsonToken.END_DOCUMENT) {
+                throw JsonIOException("JSON document was not fully consumed.")
             }
+            result
         }
-        jsonReader.endObject()
-        return ApiSuccessResponse(code, msg, data) as T
     }
 }
